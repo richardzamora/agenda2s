@@ -1,3 +1,4 @@
+import 'package:agds/tokens/colors.dart';
 import 'package:flutter/material.dart';
 
 enum AgButtonType { primary, secondary }
@@ -18,8 +19,8 @@ class AgButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).colorScheme.primary;
-    final secondaryColor = Theme.of(context).colorScheme.secondary;
+    final primaryColor = AgColors.primaryColor(context);
+    final secondaryColor = AgColors.secondaryColor(context);
     return Container(
       width: isExpanded ? double.infinity : null,
       decoration: BoxDecoration(

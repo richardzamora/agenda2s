@@ -7,7 +7,7 @@ class SessionNotifier with ChangeNotifier {
 
   User? get loggedInUser => _loggedInUser;
 
-  void setUserData(User user) {
+  void setUserData(User? user) {
     _loggedInUser = user;
     notifyListeners();
   }

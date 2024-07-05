@@ -1,5 +1,5 @@
-import 'package:agenda2/ui/helpers/home_page_routes.dart';
-import 'package:agenda2/ui/helpers/login_page_routes.dart';
+import 'package:agenda2/ui/helpers/routes/home_page_routes.dart';
+import 'package:agenda2/ui/helpers/routes/login_page_routes.dart';
 import 'package:agenda2/ui/screens/auth/login_page.dart';
 import 'package:agenda2/ui/screens/home/home_page.dart';
 import 'package:flutter/material.dart';

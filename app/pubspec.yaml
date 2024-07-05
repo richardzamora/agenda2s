@@ -39,6 +39,8 @@ dependencies:
   provider: ^6.1.1
   agds:
     path: ../agds
+  http: ^1.2.1
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +66,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/
     - assets/images/
     - assets/env/dev/
     - assets/env/mock/

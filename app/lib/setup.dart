@@ -7,7 +7,7 @@ import 'package:provider/single_child_widget.dart';
 Map<String, String> env = {};
 
 class Setup {
-  static Future<AppConfig> getApp(
+  static Future<AppConfig>  getApp(
       {required Environment environment,
       required List<SingleChildWidget> providers}) async {
     return AppConfig(

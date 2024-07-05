@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/auth/login_page.dart';
+import '../../screens/auth/login_page.dart';
 
 class LoginPageRoutes {
   LoginPageRoutes._();
