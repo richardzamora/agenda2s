@@ -5,4 +5,8 @@ class HomePageRoutes {
   HomePageRoutes._();
 
   static HomePage getHomePage(BuildContext context) => HomePage();
+
+  static void goHome(BuildContext context) {
+    Navigator.popAndPushNamed(context, HomePage.routeName);
+  }
 }

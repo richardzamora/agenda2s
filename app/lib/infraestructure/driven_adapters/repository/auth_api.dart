@@ -1,9 +1,12 @@
-import 'package:agenda2/domain/gateway/auth_gateway.dart';
-import 'package:agenda2/domain/models/user.dart';
-import 'package:agenda2/infraestructure/notifiers/session_notifier.dart';
+import 'dart:convert';
+
+import 'package:agenda2/infraestructure/driven_adapters/ag_api_client.dart';
+import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
+
+import '../../../agenda2.dart';
+import '../mock_repository/auth_api_mock.dart';
 
 class AuthApi implements AuthGateway {
   AuthApi(BuildContext context) {
@@ -13,17 +16,27 @@ class AuthApi implements AuthGateway {
   late SessionNotifier _sessionProvider;
 
   @override
-  Future<User> authenticate(String email, String pass) async {
-    const baseApi = 'https://agenda2.up.railway.app/';
-    final response = await http.Client().post(Uri.parse('${baseApi}auth/login'),
-        body: {"username": email, "password": pass},
-        headers: {'Content-Type': 'application/json'});
-    if (response.statusCode == 200) {
-      final user = userFromJson(response.body);
+  Future<Either<AppError, User>> authenticate(String email, String pass) async {
+    try {
+      String? response;
+      if (LoadEnvHelper.isMock()) {
+        response = json.encode(auth_response);
+      } else {
+        const endpoint = 'auth/login';
+        response = await AgApiClient.post(
+          endpoint,
+          {"username": email, "password": pass},
+          aditionalHeadders: {'Content-Type': 'application/json'},
+        );
+      }
+      final user = userFromJson(response);
       _sessionProvider.setUserData(user);
-      return user;
+      return Right(user);
+    } on AppError catch (error) {
+      _sessionProvider.setUserData(null);
+      return Left(error);
+    } on Exception catch (e) {
+      return Left(AppError(message: e.toString()));
     }
-    _sessionProvider.setUserData(null);
-    return User();
   }
 }

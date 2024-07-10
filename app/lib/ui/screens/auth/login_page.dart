@@ -1,17 +1,37 @@
 import 'package:agds/tokens/text_style.dart';
+import 'package:agenda2/domain/gateway/auth_gateway.dart';
 import 'package:agenda2/ui/helpers/responsive_widget.dart';
+import 'package:agenda2/ui/screens/auth/login_interface.dart';
+import 'package:agenda2/ui/screens/auth/login_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:agds/agds.dart';
 
 class LoginPage extends StatefulWidget {
   static String routeName = '/login';
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({
+    required this.authGateway,
+    required this.onLoginSuccess,
+    Key? key,
+  }) : super(key: key);
+
+  final AuthGateway authGateway;
+  final VoidCallback onLoginSuccess;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> implements LoginInterface {
+  late LoginPresenter presenter;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    presenter = LoginPresenter(widget.authGateway, this);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -109,27 +129,10 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(16.0),
                           color: AgColors.surfaceColor(context),
                         ),
-                        child: TextFormField(
-                          style: AgTextStyle.ralewayStyle.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AgColors.secondaryColor(context),
-                            fontSize: 12.0,
-                          ),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.email),
-                            ),
-                            contentPadding: const EdgeInsets.only(top: 16.0),
-                            hintText: 'Enter Email',
-                            hintStyle: AgTextStyle.ralewayStyle.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: AgColors.secondaryColor(context)
-                                  .withOpacity(0.5),
-                              fontSize: 12.0,
-                            ),
-                          ),
+                        child: AgTextFormField(
+                          controller: emailController,
+                          hintText: "Enter email",
+                          prefixIcon: Icons.email,
                         ),
                       ),
                       SizedBox(height: height * 0.014),
@@ -146,40 +149,18 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 6.0),
                       Container(
-                        height: 50.0,
-                        width: width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.0),
-                          color: AgColors.surfaceColor(context),
-                        ),
-                        child: TextFormField(
-                          style: AgTextStyle.ralewayStyle.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AgColors.secondaryColor(context),
-                            fontSize: 12.0,
+                          height: 50.0,
+                          width: width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            color: AgColors.surfaceColor(context),
                           ),
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            suffixIcon: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.show_chart),
-                            ),
-                            prefixIcon: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.lock),
-                            ),
-                            contentPadding: const EdgeInsets.only(top: 16.0),
+                          child: AgTextFormField(
+                            obscureText: true,
+                            controller: passwordController,
+                            prefixIcon: Icons.lock,
                             hintText: 'Enter Password',
-                            hintStyle: AgTextStyle.ralewayStyle.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: AgColors.secondaryColor(context)
-                                  .withOpacity(0.5),
-                              fontSize: 12.0,
-                            ),
-                          ),
-                        ),
-                      ),
+                          )),
                       SizedBox(height: height * 0.03),
                       Align(
                         alignment: Alignment.centerRight,
@@ -199,7 +180,15 @@ class _LoginPageState extends State<LoginPage> {
                       Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            String email = emailController.value.text;
+                            String password = passwordController.value.text;
+                            if (_validate(email, password)) {
+                              presenter.onLogin(email, password);
+                            } else {
+                              print('show errors');
+                            }
+                          },
                           borderRadius: BorderRadius.circular(16.0),
                           child: Ink(
                             padding: const EdgeInsets.symmetric(
@@ -228,5 +217,38 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  bool _validate(email, password) {
+    return true;
+  }
+
+  @override
+  void hideLoading() {
+    // TODO: implement hideLoading
+  }
+
+  @override
+  void showLoading() {
+    // TODO: implement showLoading
+  }
+
+  @override
+  void onLoginSuccess() {
+    widget.onLoginSuccess();
+  }
+
+  @override
+  void showError(appError) {
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              content: Column(
+                children: [
+                  Text(appError.message ?? ''),
+                  Text('Code: ${appError.errorCode}'),
+                ],
+              ),
+            ));
   }
 }

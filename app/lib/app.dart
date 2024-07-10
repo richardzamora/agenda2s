@@ -40,6 +40,7 @@ class _MyAppState extends State<MyApp> {
       ),
       routes: AppRouter().routes(),
       initialRoute: LoginPage.routeName,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
