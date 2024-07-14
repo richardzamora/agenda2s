@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ResponsiveWidget extends StatelessWidget {
-  static const double smallPibot = 600;
+  static const double smallPibot = 650;
   static const double largePibot = 1040;
 
   final Widget largeScreen;

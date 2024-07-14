@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../agds.dart';
 
-class DrawerButtonElement extends StatelessWidget {
-  const DrawerButtonElement({
-    required this.text,
-    required this.onTap,
-    this.isSelected = false,
+class AgDrawerButtonElement extends StatelessWidget {
+  const AgDrawerButtonElement(
+    this.model,
+    this.selectedRoute, {
     super.key,
   });
-  final String text;
-  final VoidCallback onTap;
-  final bool isSelected;
+  final DrawerButtonModel model;
+  final String selectedRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -21,21 +19,33 @@ class DrawerButtonElement extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: isSelected
-                ? AgColors.primaryColor(context)
-                : AgColors.secondaryColor(context)),
+            color: model.route == selectedRoute
+                ? AgColors.primaryColor(context).withOpacity(0.5)
+                : AgColors.secondaryColor(context).withOpacity(0.5)),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: !isSelected ? onTap : null,
+            onTap: !(model.route == selectedRoute)
+                ? () => Navigator.popAndPushNamed(context, model.route)
+                : null,
             borderRadius: BorderRadius.circular(5),
             child: Padding(
               padding: EdgeInsets.all(5),
-              child: Center(child: Text(text)),
+              child: Center(child: Text(model.text)),
             ),
           ),
         ),
       ),
     );
   }
+}
+
+class DrawerButtonModel {
+  DrawerButtonModel(
+    this.text,
+    this.route,
+  );
+
+  final String text;
+  final String route;
 }

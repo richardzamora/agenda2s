@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AgColors {
-  static primaryColor(BuildContext context) =>
+  static Color primaryColor(BuildContext context) =>
       Theme.of(context).colorScheme.primary;
-  static secondaryColor(BuildContext context) =>
+  static Color secondaryColor(BuildContext context) =>
       Theme.of(context).colorScheme.secondary;
-  static surfaceColor(BuildContext context) =>
+  static Color surfaceColor(BuildContext context) =>
       Theme.of(context).colorScheme.surface;
-  static errorColor(BuildContext context) =>
+  static Color errorColor(BuildContext context) =>
       Theme.of(context).colorScheme.error;
-  static inverseSurfaceColor(BuildContext context) =>
+  static Color inverseSurfaceColor(BuildContext context) =>
       Theme.of(context).colorScheme.inverseSurface;
-  static successColor(BuildContext context) =>
+  static Color successColor(BuildContext context) =>
       Theme.of(context).colorScheme.tertiary;
-  static warningColor(BuildContext context) =>
+  static Color warningColor(BuildContext context) =>
       Theme.of(context).colorScheme.tertiaryContainer;
 }

@@ -4,35 +4,40 @@ import 'package:flutter/material.dart';
 import '../atoms/ag_drawer_button_element.dart';
 
 class AgDrawer extends StatelessWidget {
-  const AgDrawer({super.key});
+  const AgDrawer(
+      {super.key,
+      required this.elements,
+      required this.selectedRoute,
+      this.isInsideDrawer = true});
+  final bool isInsideDrawer;
+  final List<DrawerButtonModel> elements;
+  final String selectedRoute;
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        children: [
-          SizedBox(height: 20),
-          CircleAvatar(
-            radius: 50,
-            child: Text('AG2'),
-          ),
-          SizedBox(height: 20),
-          DrawerButtonElement(onTap: () {}, text: 'Richard'),
-          DrawerButtonElement(onTap: () {}, text: 'Javier'),
-          DrawerButtonElement(onTap: () {}, text: 'Zamora', isSelected: true),
-          DrawerButtonElement(onTap: () {}, text: 'Herrera'),
-          DrawerButtonElement(onTap: () {}, text: 'Carreño'),
-          DrawerButtonElement(onTap: () {}, text: 'Vargas'),
-          DrawerButtonElement(onTap: () {}, text: 'Richard'),
-          Expanded(child: SizedBox()),
-          Padding(
-            padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
-            child: AgButton(
-              onTap: () {},
-              buttonText: 'Logout',
+      child: SizedBox(
+        width: isInsideDrawer ? null : 300,
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            CircleAvatar(
+              radius: 50,
+              child: Text('AG2'),
             ),
-          )
-        ],
+            SizedBox(height: 20),
+            for (DrawerButtonModel model in elements)
+              AgDrawerButtonElement(model, selectedRoute),
+            Expanded(child: SizedBox()),
+            Padding(
+              padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
+              child: AgButton(
+                onTap: () {},
+                buttonText: 'Logout',
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
