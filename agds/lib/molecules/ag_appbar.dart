@@ -7,7 +7,11 @@ class AgAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title ?? ''),
+      title: Center(
+          child: Padding(
+        padding: const EdgeInsets.only(right: 52),
+        child: Text(title ?? ''),
+      )),
     );
   }
 

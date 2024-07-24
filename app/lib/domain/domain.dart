@@ -6,4 +6,4 @@ export 'gateway/schedule_gateway.dart';
 export 'gateway/session_gateway.dart';
 export 'gateway/user_gateway.dart';
 export 'models/app_error.dart';
-export 'models/user.dart';
+export 'models/session.dart';

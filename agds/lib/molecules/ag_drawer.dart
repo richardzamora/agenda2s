@@ -8,16 +8,18 @@ class AgDrawer extends StatelessWidget {
       {super.key,
       required this.elements,
       required this.selectedRoute,
+      required this.drawerWidth,
       this.isInsideDrawer = true});
   final bool isInsideDrawer;
   final List<DrawerButtonModel> elements;
   final String selectedRoute;
+  final double drawerWidth;
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: SizedBox(
-        width: isInsideDrawer ? null : 300,
+        width: isInsideDrawer ? null : drawerWidth,
         child: Column(
           children: [
             SizedBox(height: 20),

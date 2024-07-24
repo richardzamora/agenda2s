@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../agenda2.dart';
-import '../mock_repository/auth_api_mock.dart';
+import '../repository_mock/auth_api_mock.dart';
 
 class AuthApi implements AuthGateway {
   AuthApi(BuildContext context) {
@@ -16,7 +16,8 @@ class AuthApi implements AuthGateway {
   late SessionNotifier _sessionProvider;
 
   @override
-  Future<Either<AppError, User>> authenticate(String email, String pass) async {
+  Future<Either<AppError, Session>> authenticate(
+      String email, String pass) async {
     try {
       String? response;
       if (LoadEnvHelper.isMock()) {
@@ -26,14 +27,13 @@ class AuthApi implements AuthGateway {
         response = await AgApiClient.post(
           endpoint,
           {"username": email, "password": pass},
-          aditionalHeadders: {'Content-Type': 'application/json'},
         );
       }
-      final user = userFromJson(response);
-      _sessionProvider.setUserData(user);
+      final user = sessionFromJson(response);
+      _sessionProvider.setSessionData(user);
       return Right(user);
     } on AppError catch (error) {
-      _sessionProvider.setUserData(null);
+      _sessionProvider.setSessionData(null);
       return Left(error);
     } on Exception catch (e) {
       return Left(AppError(message: e.toString()));

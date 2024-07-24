@@ -1,4 +1,5 @@
 import 'package:agenda2/agenda2.dart';
+import 'package:agenda2/infraestructure/notifiers/users_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +17,7 @@ Future<void> initApp(Environment environment,
   GoogleFonts.config.allowRuntimeFetching = false;
   final List<SingleChildWidget> items = [
     ChangeNotifierProvider(create: (_) => SessionNotifier()),
+    ChangeNotifierProvider(create: (_) => UsersNotifier()),
   ];
   WidgetsFlutterBinding.ensureInitialized();
 
