@@ -13,7 +13,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Agenda2',
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xff228896),

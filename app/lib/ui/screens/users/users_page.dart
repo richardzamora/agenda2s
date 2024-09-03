@@ -1,13 +1,14 @@
 import 'package:agds/agds.dart';
 import 'package:agenda2/agenda2.dart';
-import 'package:agenda2/domain/models/user.dart';
 import 'package:agenda2/infraestructure/notifiers/users_notifier.dart';
 import 'package:agenda2/ui/helpers/single_page_template.dart';
 import 'package:agenda2/ui/screens/users/users_interface.dart';
 import 'package:agenda2/ui/screens/users/users_presenter.dart';
+import 'package:agenda2/ui/screens/users/widgets/list_users_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+
+import 'widgets/create_user_view.dart';
 
 class UsersPage extends StatefulWidget {
   static String routeName = "/users";
@@ -21,12 +22,13 @@ class UsersPage extends StatefulWidget {
 
 class _UsersPageState extends State<UsersPage> implements UsersInterface {
   late UsersPresenter presenter;
+  String pageContent = 'Listar';
 
   @override
   void initState() {
     presenter = UsersPresenter(widget.userGateway, this);
     super.initState();
-    presenter.getUsers();
+    WidgetsBinding.instance.addPostFrameCallback((_) => presenter.getUsers());
   }
 
   @override
@@ -40,22 +42,17 @@ class _UsersPageState extends State<UsersPage> implements UsersInterface {
           AgListButtons(
               elements: ['Listar', 'Crear'],
               defaultElement: 'Listar',
-              onTapElement: (value) {}),
+              onTapElement: (value) {
+                setState(() {
+                  pageContent = value;
+                });
+              }),
+          const SizedBox(height: 12),
           SizedBox(
-            width: 400,
-            child: Column(
-              children: [
-                if (usersList != null)
-                  for (User user in usersList)
-                    AgCardElement(
-                      title: user.email,
-                      subtitle: '${user.firstName} ${user.lastName}',
-                      icon: Icon(Icons.edit),
-                      onTap: () {},
-                      onIconTap: () {},
-                    ),
-              ],
-            ),
+            width: 450,
+            child: pageContent.contains('Listar')
+                ? ListUsersView(usersList: usersList)
+                : const CreateUserView(),
           ),
         ],
       ),

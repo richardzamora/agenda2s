@@ -1,4 +1,5 @@
 import 'package:agenda2/agenda2.dart';
+import 'package:agenda2/infraestructure/notifiers/schedule_notifier.dart';
 import 'package:agenda2/infraestructure/notifiers/users_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,7 @@ Future<void> initApp(Environment environment,
   final List<SingleChildWidget> items = [
     ChangeNotifierProvider(create: (_) => SessionNotifier()),
     ChangeNotifierProvider(create: (_) => UsersNotifier()),
+    ChangeNotifierProvider(create: (_) => ScheduleNotifier()),
   ];
   WidgetsFlutterBinding.ensureInitialized();
 

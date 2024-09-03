@@ -2,11 +2,13 @@ import 'package:agenda2/ui/helpers/routes/appointment_page_routes.dart';
 import 'package:agenda2/ui/helpers/routes/home_page_routes.dart';
 import 'package:agenda2/ui/helpers/routes/login_page_routes.dart';
 import 'package:agenda2/ui/helpers/routes/schedule_page_routes.dart';
+import 'package:agenda2/ui/helpers/routes/session_class_page_routes.dart';
 import 'package:agenda2/ui/helpers/routes/users_page_routes.dart';
 import 'package:agenda2/ui/screens/appointment/appointment_page.dart';
 import 'package:agenda2/ui/screens/auth/login_page.dart';
 import 'package:agenda2/ui/screens/home/home_page.dart';
 import 'package:agenda2/ui/screens/schedule/schedule_page.dart';
+import 'package:agenda2/ui/screens/session_class/session_page.dart';
 import 'package:agenda2/ui/screens/users/users_page.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +21,7 @@ class AppRouter {
       UsersPage.routeName: UsersPageRoutes.getUsersPage,
       AppointmentPage.routeName: AppointmentPageRoutes.getAppointmentPage,
       SchedulePage.routeName: SchedulePageRoutes.getSchedulePage,
+      SessionPage.routeName: SessionClassPageRoutes.getSessionPage,
     });
     return routes;
   }

@@ -9,11 +9,13 @@ class AgDrawer extends StatelessWidget {
       required this.elements,
       required this.selectedRoute,
       required this.drawerWidth,
+      required this.logout,
       this.isInsideDrawer = true});
   final bool isInsideDrawer;
   final List<DrawerButtonModel> elements;
   final String selectedRoute;
   final double drawerWidth;
+  final VoidCallback logout;
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +24,25 @@ class AgDrawer extends StatelessWidget {
         width: isInsideDrawer ? null : drawerWidth,
         child: Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CircleAvatar(
               radius: 50,
-              child: Text('AG2'),
+              backgroundColor:
+                  AgColors.inverseSurfaceColor(context).withOpacity(0.2),
+              child: Container(
+                  padding: const EdgeInsets.all(16),
+                  child:
+                      const Image(image: AssetImage('assets/images/icon.png'))),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             for (DrawerButtonModel model in elements)
               AgDrawerButtonElement(model, selectedRoute),
-            Expanded(child: SizedBox()),
+            const Expanded(child: SizedBox()),
             Padding(
               padding: const EdgeInsets.only(left: 40, right: 40, bottom: 20),
               child: AgButton(
-                onTap: () {},
-                buttonText: 'Logout',
+                onTap: logout,
+                buttonText: 'Cerrar sesión',
               ),
             )
           ],

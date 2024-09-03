@@ -30,7 +30,7 @@ class AgDrawerButtonElement extends StatelessWidget {
                 : null,
             borderRadius: BorderRadius.circular(5),
             child: Padding(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(4),
               child: Center(child: Text(model.text)),
             ),
           ),

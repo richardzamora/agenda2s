@@ -1,36 +1,34 @@
 import 'package:agds/agds.dart';
 import 'package:agenda2/agenda2.dart';
-import 'package:agenda2/domain/models/category.dart';
-import 'package:agenda2/infraestructure/notifiers/schedule_notifier.dart';
 import 'package:agenda2/ui/helpers/single_page_template.dart';
 import 'package:agenda2/ui/screens/schedule/schedule_interface.dart';
 import 'package:agenda2/ui/screens/schedule/schedule_presenter.dart';
-import 'package:agenda2/ui/screens/schedule/widgets/list_schedule_view.dart';
+import 'package:agenda2/ui/screens/session_class/session_interface.dart';
+import 'package:agenda2/ui/screens/session_class/session_presenter.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../domain/models/schedule.dart';
-import 'widgets/create_schedule_view.dart';
+import 'widgets/create_session_view.dart';
+import 'widgets/list_session_view.dart';
 
-class SchedulePage extends StatefulWidget {
-  static String routeName = "/schedule";
-  const SchedulePage({required this.scheduleGateway, Key? key})
+class SessionPage extends StatefulWidget {
+  static String routeName = "/session";
+  const SessionPage({required this.scheduleGateway, Key? key})
       : super(key: key);
 
   final ScheduleGateway scheduleGateway;
 
   @override
-  State<SchedulePage> createState() => _SchedulePageState();
+  State<SessionPage> createState() => _SessionPageState();
 }
 
-class _SchedulePageState extends State<SchedulePage>
-    implements ScheduleInterface {
-  late SchedulePresenter presenter;
+class _SessionPageState extends State<SessionPage> implements SessionInterface {
+  late SessionPresenter presenter;
   String pageContent = 'Listar';
 
   @override
   void initState() {
-    presenter = SchedulePresenter(widget.scheduleGateway, this);
+    presenter = SessionPresenter(widget.scheduleGateway, this);
     super.initState();
     WidgetsBinding.instance
         .addPostFrameCallback((_) => presenter.getSchedules());
@@ -42,21 +40,12 @@ class _SchedulePageState extends State<SchedulePage>
     final List<Schedule> scheduleList = [
       Schedule(
           id: '123123123',
-          title: 'Springboot intermedio',
-          professionalId: 'Ezequiel',
-          categories: [
-            Category(
-                id: '2134981724',
-                name: 'Prog. orientada a objetos',
-                isMandatory: true),
-            Category(id: '2134981725', name: 'java básico', isMandatory: true),
-            Category(
-                id: '34981726', name: 'java intermedio', isMandatory: false),
-          ]),
+          title: 'Programación orientada a Objetos',
+          professionalId: 'Richard')
     ];
     return SinglePageTemplate(
-      SchedulePage.routeName,
-      title: 'Gestionar agenda',
+      SessionPage.routeName,
+      title: 'Gestionar Sesiones',
       body: Column(
         children: [
           AgListButtons(
@@ -71,8 +60,8 @@ class _SchedulePageState extends State<SchedulePage>
           SizedBox(
             width: 450,
             child: pageContent.contains('Listar')
-                ? ListScheduleView(scheduleList: scheduleList)
-                : const CreateScheduleView(),
+                ? ListSessionView(scheduleList: scheduleList)
+                : const CreateSessionView(),
           ),
         ],
       ),

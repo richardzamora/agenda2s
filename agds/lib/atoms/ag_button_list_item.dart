@@ -34,7 +34,14 @@ class AgButtonListItem extends StatelessWidget {
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Center(child: Text(buttonText)),
+            child: Center(
+                child: Text(
+              buttonText,
+              style: TextStyle(
+                  color: buttonType == AgButtonStyle.selected
+                      ? AgColors.surfaceColor(context)
+                      : AgColors.inverseSurfaceColor(context)),
+            )),
           ),
         ),
       ),

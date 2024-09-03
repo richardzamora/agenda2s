@@ -1,3 +1,5 @@
+import 'package:agds/molecules/ag_chip_element.dart';
+import 'package:agds/tokens/shadows.dart';
 import 'package:flutter/material.dart';
 
 import '../agds.dart';
@@ -7,6 +9,7 @@ class AgCardElement extends StatelessWidget {
     this.title,
     this.subtitle,
     this.content,
+    this.chips,
     this.onTap,
     this.icon,
     this.onIconTap,
@@ -16,48 +19,76 @@ class AgCardElement extends StatelessWidget {
   final String? title;
   final String? subtitle;
   final List<String>? content;
+  final List<AgSelectorModel>? chips;
   final VoidCallback? onTap;
   final Widget? icon;
   final VoidCallback? onIconTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      decoration: BoxDecoration(
-        color: AgColors.surfaceColor(context),
-        borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(
-            color: AgColors.inverseSurfaceColor(context),
-            offset: Offset(0.5, 0.5),
-            blurRadius: 2,
-          )
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(5),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (title != null) Text(title!),
-                  if (subtitle != null) Text(subtitle!),
-                  if (content != null)
-                    for (String value in content!) Text(value),
-                ],
-              )),
-              if (icon != null) IconButton(onPressed: onIconTap, icon: icon!),
-            ],
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+          decoration: BoxDecoration(
+            color: AgColors.surfaceColor(context),
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: inverseSurfaceShadow(context),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onTap: onTap,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (title != null)
+                          Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Text(title!)),
+                        if (subtitle != null)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8, top: 8),
+                            child: Text(subtitle!),
+                          ),
+                        if (content != null)
+                          for (String value in content!)
+                            Padding(
+                                padding: const EdgeInsets.only(left: 8, top: 8),
+                                child: Text(value)),
+                      ],
+                    )),
+                    if (icon != null)
+                      IconButton(onPressed: onIconTap, icon: icon!),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
-      ),
+        if (chips != null)
+          Wrap(
+            alignment: WrapAlignment.start,
+            runSpacing: 4,
+            spacing: 4,
+            children: [
+              for (AgSelectorModel value in chips!)
+                AgChipElement(
+                  hasRequiredOption: true,
+                  element: value,
+                  multiplierSize: 0.8,
+                ),
+            ],
+          ),
+      ],
     );
   }
 }

@@ -51,13 +51,16 @@ class _LoginPageState extends State<LoginPage> implements LoginInterface {
                       height: height,
                       color: AgColors.primaryColor(context),
                       child: Center(
-                        child: Text(
-                          'Agenda2',
-                          style: AgTextStyle.ralewayStyle.copyWith(
-                            fontSize: 48.0,
-                            color: AgColors.inverseSurfaceColor(context),
-                            fontWeight: FontWeight.w800,
-                          ),
+                        child: Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: AgColors.surfaceColor(context)
+                                  .withOpacity(0.3)),
+                          width: 200,
+                          height: 200,
+                          child: const Image(
+                              image: AssetImage('assets/images/icon.png')),
                         ),
                       ),
                     ),
@@ -82,7 +85,7 @@ class _LoginPageState extends State<LoginPage> implements LoginInterface {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Let’s',
+                              text: 'Bienvenido a tu app',
                               style: AgTextStyle.ralewayStyle.copyWith(
                                 fontSize: 25.0,
                                 color: AgColors.primaryColor(context),
@@ -90,7 +93,7 @@ class _LoginPageState extends State<LoginPage> implements LoginInterface {
                               ),
                             ),
                             TextSpan(
-                              text: ' Sign In 👇',
+                              text: ' Agenda2',
                               style: AgTextStyle.ralewayStyle.copyWith(
                                 fontWeight: FontWeight.w800,
                                 color: AgColors.secondaryColor(context),
@@ -102,7 +105,7 @@ class _LoginPageState extends State<LoginPage> implements LoginInterface {
                       ),
                       SizedBox(height: height * 0.02),
                       Text(
-                        'Hey, Enter your details to get sign in \nto your account.',
+                        'Ingresa tus datos de acceso para iniciar sesión :)',
                         style: AgTextStyle.ralewayStyle.copyWith(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w400,
@@ -113,7 +116,7 @@ class _LoginPageState extends State<LoginPage> implements LoginInterface {
                       Padding(
                         padding: const EdgeInsets.only(left: 16.0),
                         child: Text(
-                          'Email',
+                          'Correo',
                           style: AgTextStyle.ralewayStyle.copyWith(
                             fontSize: 12.0,
                             color: AgColors.secondaryColor(context),
@@ -131,7 +134,7 @@ class _LoginPageState extends State<LoginPage> implements LoginInterface {
                         ),
                         child: AgTextFormField(
                           controller: emailController,
-                          hintText: "Enter email",
+                          hintText: "Ingresa tu correo",
                           prefixIcon: Icons.email,
                         ),
                       ),
@@ -139,7 +142,7 @@ class _LoginPageState extends State<LoginPage> implements LoginInterface {
                       Padding(
                         padding: const EdgeInsets.only(left: 16.0),
                         child: Text(
-                          'Password',
+                          'Contraseña',
                           style: AgTextStyle.ralewayStyle.copyWith(
                             fontSize: 12.0,
                             color: AgColors.secondaryColor(context),
@@ -159,7 +162,7 @@ class _LoginPageState extends State<LoginPage> implements LoginInterface {
                             obscureText: true,
                             controller: passwordController,
                             prefixIcon: Icons.lock,
-                            hintText: 'Enter Password',
+                            hintText: 'Ingresa tu contraseña',
                           )),
                       SizedBox(height: height * 0.03),
                       Align(
@@ -167,7 +170,7 @@ class _LoginPageState extends State<LoginPage> implements LoginInterface {
                         child: TextButton(
                           onPressed: () {},
                           child: Text(
-                            'Forgot Password?',
+                            'Olvidaste tu contraseña?',
                             style: AgTextStyle.ralewayStyle.copyWith(
                               fontSize: 12.0,
                               color: AgColors.primaryColor(context),
@@ -198,7 +201,7 @@ class _LoginPageState extends State<LoginPage> implements LoginInterface {
                               color: AgColors.primaryColor(context),
                             ),
                             child: Text(
-                              'Sign In',
+                              'Iniciar sesión',
                               style: AgTextStyle.ralewayStyle.copyWith(
                                 fontWeight: FontWeight.w700,
                                 color: AgColors.inverseSurfaceColor(context),
