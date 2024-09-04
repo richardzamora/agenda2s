@@ -13,7 +13,7 @@ class ListAppointmentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formater = DateFormat('hh:mm a / dd-MM-yyyy');
+    final formater = DateFormat('hh:mm a / dd-MMM-yyyy');
     return Column(
       children: [
         if (appointmentList != null)

@@ -5,5 +5,4 @@ export 'gateway/roll_gateway.dart';
 export 'gateway/schedule_gateway.dart';
 export 'gateway/session_gateway.dart';
 export 'gateway/user_gateway.dart';
-export 'models/app_error.dart';
-export 'models/session.dart';
+export 'models/models.dart';

@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:agenda2/agenda2.dart';
-import 'package:agenda2/domain/models/schedule.dart';
-import 'package:agenda2/domain/models/user.dart';
 import 'package:agenda2/infraestructure/driven_adapters/ag_api_client.dart';
-import 'package:agenda2/infraestructure/driven_adapters/repository_mock/schedule_api_mock.dart';
+import 'package:agenda2/infraestructure/driven_adapters/repository_mock/session_api_mock.dart';
 import 'package:agenda2/infraestructure/notifiers/users_notifier.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +10,8 @@ import 'package:provider/provider.dart';
 
 import '../repository_mock/users_api_mock.dart';
 
-class ScheduleApi implements ScheduleGateway {
-  ScheduleApi(BuildContext context) {
+class SessionApi implements SessionGateway {
+  SessionApi(BuildContext context) {
     _sessionProvider = Provider.of<SessionNotifier>(context, listen: false);
     _usersProvider = Provider.of<UsersNotifier>(context, listen: false);
   }
@@ -22,7 +20,8 @@ class ScheduleApi implements ScheduleGateway {
   late UsersNotifier _usersProvider;
 
   @override
-  Future<Either<AppError, List<Schedule>>> getSchedules() async {
+  Future<Either<AppError, List<Session>>> getSessionsBySchedule(
+      Schedule schedule) async {
     try {
       String? response;
       if (LoadEnvHelper.isMock()) {
@@ -34,7 +33,7 @@ class ScheduleApi implements ScheduleGateway {
         final users = usersFromJson(response);
         return Right([]);
       }
-      return Right(ScheduleApiMock.scheduleListMock);
+      return Right(SessionApiMock.sessionsListMock);
     } on AppError catch (error) {
       _usersProvider.setUsersList(null);
       return Left(error);

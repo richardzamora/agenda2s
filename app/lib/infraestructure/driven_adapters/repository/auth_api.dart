@@ -16,7 +16,7 @@ class AuthApi implements AuthGateway {
   late SessionNotifier _sessionProvider;
 
   @override
-  Future<Either<AppError, Session>> authenticate(
+  Future<Either<AppError, AuthSession>> authenticate(
       String email, String pass) async {
     try {
       String? response;

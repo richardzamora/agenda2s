@@ -1,33 +1,21 @@
-// To parse this JSON data, do
-//
-//     final user = userFromJson(jsonString);
-
-import 'dart:convert';
-
-Session sessionFromJson(String str) => Session.fromJson(json.decode(str));
-
-String sessionToJson(Session data) => json.encode(data.toJson());
+import 'package:agenda2/agenda2.dart';
 
 class Session {
-  String? username;
-  String? message;
-  String? token;
-
   Session({
-    this.username,
-    this.message,
-    this.token,
+    this.id,
+    this.profesional,
+    this.description,
+    this.place,
+    this.date,
+    this.usersLimit,
+    this.schedule,
   });
 
-  factory Session.fromJson(Map<String, dynamic> json) => Session(
-        username: json["username"],
-        message: json["message"],
-        token: json["token"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "username": username,
-        "message": message,
-        "token": token,
-      };
+  String? id;
+  String? profesional;
+  String? description;
+  String? place;
+  DateTime? date;
+  int? usersLimit;
+  Schedule? schedule;
 }

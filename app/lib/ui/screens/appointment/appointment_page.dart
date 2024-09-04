@@ -1,6 +1,5 @@
 import 'package:agds/agds.dart';
 import 'package:agenda2/agenda2.dart';
-import 'package:agenda2/domain/models/appointment.dart';
 import 'package:agenda2/ui/helpers/single_page_template.dart';
 import 'package:agenda2/ui/screens/appointment/appointment_interface.dart';
 import 'package:agenda2/ui/screens/appointment/appointment_presenter.dart';
@@ -8,15 +7,14 @@ import 'package:agenda2/ui/screens/appointment/widgets/create_appointment_view.d
 import 'package:agenda2/ui/screens/appointment/widgets/list_appointment_view.dart';
 import 'package:flutter/material.dart';
 
-import '../../../domain/models/category.dart';
-import '../../../domain/models/schedule.dart';
-
 class AppointmentPage extends StatefulWidget {
   static String routeName = "/appointment";
-  const AppointmentPage({required this.scheduleGateway, Key? key})
+  const AppointmentPage(
+      {required this.scheduleGateway, required this.sessionGateway, Key? key})
       : super(key: key);
 
   final ScheduleGateway scheduleGateway;
+  final SessionGateway sessionGateway;
 
   @override
   State<AppointmentPage> createState() => _AppointmentPageState();
@@ -26,10 +24,13 @@ class _AppointmentPageState extends State<AppointmentPage>
     implements AppointmentInterface {
   late AppointmentPresenter presenter;
   String pageContent = 'Listar';
+  List<Schedule>? schedulesList;
+  List<Session>? sessionsList;
 
   @override
   void initState() {
-    presenter = AppointmentPresenter(widget.scheduleGateway, this);
+    presenter = AppointmentPresenter(
+        widget.scheduleGateway, widget.sessionGateway, this);
     super.initState();
     WidgetsBinding.instance
         .addPostFrameCallback((_) => presenter.getSchedules());
@@ -37,30 +38,15 @@ class _AppointmentPageState extends State<AppointmentPage>
 
   @override
   Widget build(BuildContext context) {
-    // final scheduleList = Provider.of<ScheduleNotifier>(context).scheduleList;
     final List<Appointment> appointmentList = [
       Appointment(
           id: '123123123',
-          description: 'xxxxxx',
-          sessionDescription: 'Introducción a Springboot',
-          date: DateTime.now(),
+          sessionDescription:
+              'Introducción a Java. Tipos de dato, condicionales y bucles',
+          date: DateTime(2024, 09, 23, 18),
           placeName: 'Virtual'),
     ];
-    final List<Schedule> scheduleList = [
-      Schedule(
-          id: '123123123',
-          title: 'Springboot intermedio',
-          professionalId: 'Ezequiel',
-          categories: [
-            Category(
-                id: '2134981724',
-                name: 'Prog. orientada a objetos',
-                isMandatory: true),
-            Category(id: '2134981725', name: 'java básico', isMandatory: true),
-            Category(
-                id: '34981726', name: 'java intermedio', isMandatory: false),
-          ]),
-    ];
+
     return SinglePageTemplate(
       AppointmentPage.routeName,
       title: 'Gestionar citas',
@@ -79,7 +65,10 @@ class _AppointmentPageState extends State<AppointmentPage>
               width: 450,
               child: pageContent.contains('Listar')
                   ? ListAppointmentView(appointmentList: appointmentList)
-                  : CreateAppointmentView(scheduleList: scheduleList)),
+                  : CreateAppointmentView(
+                      scheduleList: schedulesList,
+                      sessionList: sessionsList,
+                      presenter: presenter)),
         ],
       ),
     );
@@ -103,5 +92,19 @@ class _AppointmentPageState extends State<AppointmentPage>
   @override
   void getSchedules() {
     // TODO: implement getSchedules
+  }
+
+  @override
+  void updateSchedulesAviable(List<Schedule> schedules) {
+    setState(() {
+      schedulesList = schedules;
+    });
+  }
+
+  @override
+  void updateSessionsAviable(List<Session>? sessions) {
+    setState(() {
+      sessionsList = sessions;
+    });
   }
 }
