@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../../agenda2.dart';
 
 class SessionNotifier with ChangeNotifier {
-  User? _loggedInUser;
+  AuthSession? _loggedInUser;
 
-  User? get loggedInUser => _loggedInUser;
+  AuthSession? get loggedInUser => _loggedInUser;
 
-  void setUserData(User user) {
-    _loggedInUser = user;
+  void setSessionData(AuthSession? session) {
+    _loggedInUser = session;
     notifyListeners();
   }
 
